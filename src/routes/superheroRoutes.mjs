@@ -38,7 +38,12 @@ router.post(
 );
 
 // Actualizar un superhéroe por su id
-router.put("/heroes/actualizar/:id", actualizarSuperheroePorIdController);
+router.put(
+	"/heroes/actualizar/:id",
+	superheroValidationRules(),
+	handleValidationErrors,
+	actualizarSuperheroePorIdController
+);
 
 // Ruta para eliminar un superheroe por su nombre de superhéroe
 router.delete(

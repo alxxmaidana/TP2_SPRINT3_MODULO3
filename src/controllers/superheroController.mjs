@@ -23,10 +23,9 @@ export async function obtenerSuperheroePorIdController(req, res) {
 		const superheroe = await obtenerSuperheroePorId(id);
 		if (superheroe === null) {
 			return res.status(404).send({ mesagge: "Superhéroe no encontrado" });
-		} else {
-			const superheroeFormateado = renderizarSuperheroe(superheroe);
-			res.status(200).json(superheroeFormateado);
 		}
+		const superheroeFormateado = renderizarSuperheroe(superheroe);
+		res.status(200).json(superheroeFormateado);
 	} catch (err) {
 		res.status(500).send({
 			mesagge: "Error al buscar el superhéroe",
@@ -63,10 +62,9 @@ export async function buscarSuperheoresPorAtributoController(req, res) {
 			return res.status(404).send({
 				mesagge: "No se encontraros superhéroes con los valores especificados",
 			});
-		} else {
-			const superheroesFormateados = renderizarlistaSuperheroes(superheroes);
-			res.status(200).json(superheroesFormateados);
 		}
+		const superheroesFormateados = renderizarlistaSuperheroes(superheroes);
+		res.status(200).json(superheroesFormateados);
 	} catch (err) {
 		res.status(500).send({
 			mesagge: "Error al buscar sueperhéroes por atributo",
@@ -83,10 +81,9 @@ export async function obtenerSuperheroesMayoresDe30Controller(_req, res) {
 			return res.status(404).send({
 				mesagge: "No se encontraron superhéroes mayores a 30 años",
 			});
-		} else {
-			const superheroesFormateados = renderizarlistaSuperheroes(superheroes);
-			res.status(200).json(superheroesFormateados);
 		}
+		const superheroesFormateados = renderizarlistaSuperheroes(superheroes);
+		res.status(200).json(superheroesFormateados);
 	} catch (err) {
 		res.status(500).send({
 			mesagge: "Error al buscar superhéros mayores a 30 años",
@@ -122,10 +119,9 @@ export async function eliminarSuperheroePorNombreController(req, res) {
 			return res.status(404).send({
 				mesagge: `El superhéroe ${nombreSuperheroe} no existe, no se puede eliminar`,
 			});
-		} else {
-			const superheroeFormateado = renderizarSuperheroe(superheroeEliminado);
-			res.status(200).json(superheroeFormateado);
 		}
+		const superheroeFormateado = renderizarSuperheroe(superheroeEliminado);
+		res.status(200).json(superheroeFormateado);
 	} catch (err) {
 		res.status(500).send({
 			mesagge: "Error al eliminar el superheroe",
@@ -143,10 +139,9 @@ export async function eliminarSuperheroePorIdController(req, res) {
 			return res.status(404).send({
 				mesagge: "El superhéroe no existe, no se puede eliminar",
 			});
-		} else {
-			const superheroeFormateado = renderizarSuperheroe(superheroeEliminado);
-			res.status(200).json(superheroeFormateado);
 		}
+		const superheroeFormateado = renderizarSuperheroe(superheroeEliminado);
+		res.status(200).json(superheroeFormateado);
 	} catch (err) {
 		res.status(500).send({
 			mesagge: "Error al elminar el superhéroe",
@@ -159,20 +154,15 @@ export async function eliminarSuperheroePorIdController(req, res) {
 export async function actualizarSuperheroePorIdController(req, res) {
 	try {
 		const { id } = req.params;
-		// findByIdAndUpdate retorna el supeheroe devuelve el documento original (antes de ser actualizado)
-		const superheroeEncotrado = await actualizarSuperheroePorId(id, {
-			$set: { nombreSuperheroe: "Viuda Negra" },
-		});
-
+		const superheroeEncotrado = await actualizarSuperheroePorId(id, req.body);
 		// Verificar si se encontró el superheroe
 		if (superheroeEncotrado === null) {
 			return res.status(404).send({
 				mesagge: "No se encontró el superhéroe, no se pudo actualizar",
 			});
-		} else {
-			const superheroeFormateado = renderizarSuperheroe(superheroeEncotrado);
-			res.status(200).json(superheroeFormateado);
 		}
+		const superheroeFormateado = renderizarSuperheroe(superheroeEncotrado);
+		res.status(200).json(superheroeFormateado);
 	} catch (err) {
 		res.status(500).send({
 			mesagge: "Error al actualizar el superhéroe",
