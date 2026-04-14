@@ -19,14 +19,20 @@ export const superheroValidationRules = () => [
 			"El nombre real del Superhéroe debe tener entre 3 y 60 caracteres.",
 		),
 	body("edad")
+		.trim()
 		.notEmpty()
-		.withMessage("El campo edad no puede quedar vacío.")
-		.isInt({ min: 0 }) // No admite edad negativa
-		.withMessage("La edad no puede ser negativa."),
+		.withMessage("La edad es requerida")
+		.isNumeric()
+		.withMessage("La edad deber ser un número")
+		.custom((value) => { // validar que se un número mayor a 0
+			if (value < 0) {
+				throw new Error("La edad no puede ser negativa");
+			}
+			return true;
+		}),
 	body("poderes")
 		.isArray({ min: 1 }) // Validar que el array no esté vacío
 		.withMessage("Los poderes del Superhéroe son requeridos."),
-		
 	body("poderes.*") // El asterisco aplica la regla a CADA los elementos del array
 		.trim()
 		.notEmpty()

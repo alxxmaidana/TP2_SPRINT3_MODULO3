@@ -39,6 +39,11 @@ export async function obtenerSuperheroePorIdController(req, res) {
 export async function obtenerTodosLosSuperheroesController(_req, res) {
 	try {
 		const superheroes = await obtenerTodosLosSuperheroes();
+		if (superheroes === null) {
+			return res.status(404).send({
+				message: "No hay superhéroes, la colección se encuentra vacía"
+			})
+		}
 		const superheroesFormateados = renderizarlistaSuperheroes(superheroes);
 		res.status(200).json(superheroesFormateados);
 	} catch (err) {
@@ -56,7 +61,7 @@ export async function buscarSuperheoresPorAtributoController(req, res) {
 		const superheroes = await buscarSuperheoresPorAtributo(atributo, valor);
 		if (superheroes.length === 0) {
 			return res.status(404).send({
-				mesagge: "No se encontraros superhéroes con ese atributo",
+				mesagge: "No se encontraros superhéroes con los valores especificados",
 			});
 		} else {
 			const superheroesFormateados = renderizarlistaSuperheroes(superheroes);
@@ -115,7 +120,7 @@ export async function eliminarSuperheroePorNombreController(req, res) {
 			await eliminarSuperheroePorNombre(nombreSuperheroe);
 		if (!superheroeEliminado) {
 			return res.status(404).send({
-				mesagge: `No se encotró el superhéroe ${nombreSuperheroe}, no se puede eliminar`,
+				mesagge: `El superhéroe ${nombreSuperheroe} no existe, no se puede eliminar`,
 			});
 		} else {
 			const superheroeFormateado = renderizarSuperheroe(superheroeEliminado);
@@ -136,7 +141,7 @@ export async function eliminarSuperheroePorIdController(req, res) {
 		const superheroeEliminado = await eliminarSuperheroePorId(id);
 		if (!superheroeEliminado) {
 			return res.status(404).send({
-				mesagge: "Nose encontró el superhéroe, no se puede eliminar",
+				mesagge: "El superhéroe no existe, no se puede eliminar",
 			});
 		} else {
 			const superheroeFormateado = renderizarSuperheroe(superheroeEliminado);
