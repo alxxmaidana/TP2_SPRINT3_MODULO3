@@ -9,8 +9,8 @@ import {
 	obtenerSuperheroesMayoresDe30Controller,
 	obtenerTodosLosSuperheroesController,
 } from "../controllers/superheroController.mjs";
-import { handleValidationErrors } from "../middlewares/errorMiddleware.mjs";
-import { superheroValidationRules } from "../middlewares/validationRules.mjs";
+import { handleValidationErrors } from "../validations/errorMiddleware.mjs";
+import { superheroValidationRules } from "../validations/validationRules.mjs";
 
 const router = Router();
 
